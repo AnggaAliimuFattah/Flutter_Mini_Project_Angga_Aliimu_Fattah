@@ -23,8 +23,11 @@ Aplikasi Restaurant Bucket List digunakan untuk memberikan kemudahan bagi para p
 
 ###   Sample App Demo
 ---
-- 
+https://drive.google.com/drive/folders/1Qg1vAKwgkpvDZiPzumgEzUZw6mXNy-vD?usp=drive_link 
 
 ### SetUp
 ---
-- tes
+- Buka text editor
+- buka source code diatas
+- jalankan emulator
+- lalu run without debugging
