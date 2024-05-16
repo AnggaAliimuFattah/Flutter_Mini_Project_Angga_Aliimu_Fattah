@@ -24,7 +24,9 @@ class _ChatAIState extends State<ChatAI> {
        backgroundColor: Color(0xFF16181F),
        appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:  Text('Chat with AI', style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white),),
+        title:  Text('Chat with AI', style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white),
+        key: Key("judul Page AI"),
+        ),
         centerTitle: false,
         backgroundColor: Color(0xFF262A36),
          shape: RoundedRectangleBorder(
@@ -42,6 +44,7 @@ class _ChatAIState extends State<ChatAI> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextFormField(
+                key: Key("Field Pesan"),
                 cursorColor: Colors.white,
                 controller: _textController,
                 style:  GoogleFonts.montserrat(fontSize: screenWidth * 0.04,color: Colors.white,fontWeight: FontWeight.bold,
@@ -64,6 +67,7 @@ class _ChatAIState extends State<ChatAI> {
               ),
                SizedBox(height: 20),
               ElevatedButton(
+                key: Key("Submit Button"),
                 onPressed: _submitForm,
                 child: const Text('Submit'),
                 style: ButtonStyle(
@@ -107,13 +111,21 @@ class _ChatAIState extends State<ChatAI> {
           activeColor: Colors.white,
           tabBackgroundColor: Colors.grey.shade800,
           tabs: const [
-            GButton(icon: Icons.home,
+           GButton(
+            key: Key('HomeNavButton'),  
+            icon: Icons.home,
             text: 'Home',),
-            GButton(icon: Icons.search,
+            GButton(
+            key: Key('SearchNavButton'),
+            icon: Icons.search,
             text: 'Search',),
-            GButton(icon: Icons.reviews,
+            GButton(
+            key: Key('ReviewsNavButton'),
+            icon: Icons.reviews,
             text: 'Reviews',),
-            GButton(icon: Icons.chat,
+            GButton(
+            key: Key('ChatBotNavButton'),
+            icon: Icons.chat,
             text: 'Chat Bot',),
           ],
         );
