@@ -21,6 +21,21 @@ Aplikasi Restaurant Bucket List digunakan untuk memberikan kemudahan bagi para p
 - Github
 - MockApi.io
 
+1. Package Yang Digunakan Pada Projek ini
+  - cupertino_icons: ^1.0.6
+  - shared_preferences: ^2.2.3
+  - http: ^1.2.1
+  - provider: ^6.1.2
+  - dio: ^5.4.3+1
+  - google_fonts: ^6.2.1
+  - google_nav_bar: ^5.0.6
+  - envied: ^0.5.4+1
+  - envied_generator: ^0.5.4+1
+  - build_runner: ^2.4.9
+  - mockito: ^5.4.4
+
+
+
 ###   Sample App Demo
 ---
 https://drive.google.com/drive/folders/1Qg1vAKwgkpvDZiPzumgEzUZw6mXNy-vD?usp=drive_link 
