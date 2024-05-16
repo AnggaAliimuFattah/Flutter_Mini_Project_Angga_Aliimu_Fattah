@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(top: 60.0, left: 22),
             child: Text(
               'Hello\nLogin Page!',
+              key: Key("My Login Page"),
               style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
@@ -94,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ListView(
                 children: [
                    TextFormField(
+                    key: Key("Username Text Field"),
                     controller:  _nameController,
                     decoration: const InputDecoration(
                       suffixIcon: Icon(Icons.check,color: Colors.grey,),
@@ -111,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   ),
                    TextFormField(
+                    key: Key("Password Text Field"),
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(
@@ -143,20 +146,65 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                 child: Center(
                 child: ElevatedButton(
+                  key: Key("Submit Login Button"),
+                  // perubahan dsisni
                  onPressed: () {
                 final isValidForm = formKey.currentState!.validate();
-                String username = _nameController.text;
-                if (isValidForm) {
-                  logindata.setBool('login', false);
-                  logindata.setString('username', username);
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RestaurantListHome(),
-                      ),
-                      (route) => false);
-                      }
-                    },  
+                      if (isValidForm) {
+                                String username = _nameController.text;
+                                String password = _passwordController.text;
+
+                                if (username == 'admin' &&
+                                    password == 'admin') {
+                                  logindata.setBool('login', false);
+                                  logindata.setString('username', username);
+
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text('Login Successful'),
+                                        content: Text('Anda berhasil login'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const RestaurantListHome(),
+                                                ),
+                                                (route) => false,
+                                              );
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: Text('Login Failed'),
+                                        content: Text(
+                                            'Username atau password Anda salah'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
+                              }
+                            },
                      style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent, // Background color
                     shadowColor: Colors.transparent, // No shadow

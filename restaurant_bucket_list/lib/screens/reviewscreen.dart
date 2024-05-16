@@ -46,7 +46,8 @@ void initState() {
     ),
   ),
       ),
-      body: Column(
+      body:  SingleChildScrollView(  
+     child:  Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -59,8 +60,12 @@ void initState() {
               child: Text('List of Reviews', style:  GoogleFonts.montserrat(fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold, color: Color.fromARGB(232, 241, 240, 240))),
             ),
           ),
-          Expanded(child: _buildReviewList()),
+           Container(
+              height: MediaQuery.of(context).size.height - 450, // Perbaikan tinggi container untuk daftar review
+              child: _buildReviewList(),
+            ),
         ],
+      ),
       ),
       bottomNavigationBar: Consumer<NavigationProvider>(
         builder: (context, navigationProvider, child) {
@@ -76,13 +81,21 @@ void initState() {
           activeColor: Colors.white,
           tabBackgroundColor: Colors.grey.shade800,
           tabs: const [
-            GButton(icon: Icons.home,
+            GButton(
+            key: Key('HomeNavButton'),  
+            icon: Icons.home,
             text: 'Home',),
-            GButton(icon: Icons.search,
+            GButton(
+            key: Key('SearchNavButton'),
+            icon: Icons.search,
             text: 'Search',),
-            GButton(icon: Icons.reviews,
+            GButton(
+            key: Key('ReviewsNavButton'),
+            icon: Icons.reviews,
             text: 'Reviews',),
-            GButton(icon: Icons.chat,
+            GButton(
+            key: Key('ChatBotNavButton'),
+            icon: Icons.chat,
             text: 'Chat Bot',),
           ],
         );
@@ -101,6 +114,7 @@ void initState() {
           Padding(
             padding:  const EdgeInsets.all(8.0),
           child : TextFormField(
+            key: Key("Name"),
             cursorColor: Colors.white,
             controller: _nameController,
              style:   GoogleFonts.montserrat(fontSize: screenWidth * 0.04,color: Colors.white,fontWeight: FontWeight.bold,),
@@ -115,7 +129,17 @@ void initState() {
             borderRadius: BorderRadius.circular(15.0), // Rounded corners
           ),
         ),
-            validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
+            //validator: (value) => value!.isEmpty ? 'Please enter a name' : null,
+             validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a name';
+                } else if (value.length < 5) {
+                  return 'Name must be at least 5 characters';
+                } else if (!RegExp(r'^[A-Z]').hasMatch(value)) {
+                  return 'Name must start with a capital letter';
+                }
+                return null;
+              },
           ),
           ),
           Padding(
@@ -135,7 +159,17 @@ void initState() {
             borderRadius: BorderRadius.circular(15.0), // Rounded corners
           ),
         ),
-        validator: (value) => value!.isEmpty ? 'Please enter a review' : null,
+        //validator: (value) => value!.isEmpty ? 'Please enter a review' : null,
+           validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a review';
+                } else if (value.length < 5) {
+                  return 'Review must be at least 5 characters';
+                } else if (!RegExp(r'^[A-Z]').hasMatch(value)) {
+                  return 'Review must start with a capital letter';
+                }
+                return null;
+              },
       ),
     ),
           Padding(
@@ -155,7 +189,17 @@ void initState() {
             borderRadius: BorderRadius.circular(15.0), // Rounded corners
           ),
         ),
-        validator: (value) => value!.isEmpty ? 'Please enter a date' : null,
+        //validator: (value) => value!.isEmpty ? 'Please enter a date' : null,
+        validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a date';
+                } else if (value.length < 5) {
+                  return 'Date must be at least 5 characters';
+                } else if (!RegExp(r'^[A-Z]').hasMatch(value)) {
+                  return 'Date must start with a capital letter';
+                }
+                return null;
+              },
       ),
     ),
     Padding(
@@ -195,7 +239,7 @@ void initState() {
 
     // Optionally, show a snackbar or another notification that the review was added
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Review added successfully'))
+      SnackBar(content: Text('Data Berhasil Ditambah'))
     );
   }
 }
@@ -237,6 +281,9 @@ void initState() {
                   onPressed: () {
                     provider.removeReview(review.id);
                     // Optionally, confirm deletion
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Data berhasil di hapus')),
+                     );
                   },
                 ),
               ],
@@ -285,6 +332,10 @@ void initState() {
               );
               Provider.of<ReviewsProvider>(context, listen: false).updateReview(review.id, updatedReview);
               Navigator.of(dialogContext).pop();
+              //Feedback
+              ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Data berhasil di update'))
+                  );
             },
             child: Text('Update'),
           ),

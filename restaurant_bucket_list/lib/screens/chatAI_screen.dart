@@ -148,16 +148,23 @@ class _ChatAIState extends State<ChatAI> {
         },
       ),
     );
-    if (response.statusCode == 200) {
-      // Berhasil mendapatkan respons dari server
-      final responseData = jsonDecode(response.body);
-      print('Respon sukses: ${responseData.toString()}');
+   if (response.statusCode == 200) {
+    // Berhasil mendapatkan respons dari server
+    final responseData = jsonDecode(response.body);
+    print('Respon sukses: ${responseData.toString()}');
+
+    // Memperoleh isi dari content
+    if (responseData.containsKey('choices') && responseData['choices'].isNotEmpty) {
       setState(() {
-        _response = responseData.toString();
-      }); 
+        // Memperbarui _response dengan isi dari content
+        _response = responseData['choices'][0]['message']['content'].toString();
+      });
     } else {
-      // Gagal mendapatkan respons dari server
-      print('Gagal mendapatkan respons. Kode status: ${response.body}');
+      print('Gagal mendapatkan isi konten dari respons.');
     }
-}
+  } else {
+    // Gagal mendapatkan respons dari server
+    print('Gagal mendapatkan respons. Kode status: ${response.body}');
+  }
+  }
 }

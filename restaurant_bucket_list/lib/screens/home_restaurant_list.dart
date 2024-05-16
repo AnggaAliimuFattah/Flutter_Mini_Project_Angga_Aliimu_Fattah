@@ -46,6 +46,14 @@ class _RestaurantListHomeState extends State<RestaurantListHome> {
     return stars;
   }
 
+void _logout() {
+    logindata.setBool('login', true);
+    logindata.remove('username');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -53,7 +61,9 @@ class _RestaurantListHomeState extends State<RestaurantListHome> {
       backgroundColor: Color(0xFF16181F),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title:  Text('Restaurant B.L', style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white),),
+        title:  Text('Restaurant B.L', style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.bold,color:Colors.white),
+        key: Key('Judul List Home'),
+        ),
         centerTitle: false,
         backgroundColor: Color(0xFF262A36),
          shape: RoundedRectangleBorder(
@@ -201,13 +211,21 @@ class _RestaurantListHomeState extends State<RestaurantListHome> {
           activeColor: Colors.white,
           tabBackgroundColor: Colors.grey.shade800,
           tabs: const [
-            GButton(icon: Icons.home,
+            GButton(
+            key: Key('HomeNavButton'),  
+            icon: Icons.home,
             text: 'Home',),
-            GButton(icon: Icons.search,
+            GButton(
+            key: Key('SearchNavButton'),
+            icon: Icons.search,
             text: 'Search',),
-            GButton(icon: Icons.reviews,
+            GButton(
+            key: Key('ReviewsNavButton'),
+            icon: Icons.reviews,
             text: 'Reviews',),
-            GButton(icon: Icons.chat,
+            GButton(
+            key: Key('ChatBotNavButton'),
+            icon: Icons.chat,
             text: 'Chat Bot',),
           ],
         );
